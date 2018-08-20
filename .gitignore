@@ -1,0 +1,8 @@
+*.json
+us-*
+rds-*
+acl-*
+elb-*
+*.pyc
+*.htaccess
+*.htpasswd

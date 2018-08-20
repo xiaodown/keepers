@@ -1,0 +1,63 @@
+#!/bin/bash
+
+#####################################
+# move an ip with AWS and Heartbeat #
+# Will Dunn			    #
+# Positronics Technologies          #
+#####################################
+
+  # The region the instances are in (ie: us-east-1)
+# REGION=<%= @aws_region %> #chef template
+REGION=
+
+
+if [ ! -e /usr/bin/ec2-describe-instances ] ;then
+    echo "Bailing, you need ec2-api-tools and ec2-ami-tools."
+        # We need those two packages; they're in the debian multiverse
+        # (google: apt sources multiverse for more info)
+    exit 1
+fi
+  
+  # The floating IP that you want to take over
+  # Obviously this can be templated for chef/ansible/puppet, i.e.: 
+# VIP=<%= @vip %>  #chef template
+  # or you can pull it from a tag associated with the instance.
+VIP=`/usr/bin/ec2-describe-instances i-06975cce --region $REGION | grep ^TAG | grep -m 1 vip | awk '{print $NF}'`
+
+    # Heartbeat only understands start/stop/status, so
+    # any script has to handle being called under any circumstance
+    # and has to understand start/stop.
+if [ "X$1" != "Xstart" ] ;then
+        # If it's not 'start', we don't want to steal the IP
+        # and there's nothing left to do - only act on 'start'
+    exit 0
+fi
+
+    # So, now we need to tell amazon that this instance is going to have the floating IP.
+    # In order to be able to assign ip addresses, your instance (and its failover partner) will
+    # need an IAM role applied (at creation time) that has a policy something like this:
+    # {
+    #   "Statement": [
+    #      {
+    #          "Action": [
+    #              "ec2:AssignPrivateIpAddresses",
+    #              "ec2:DescribeInstances"
+    #          ],
+    #          "Effect": "Allow",
+    #          "Resource": "*"
+    #      }
+    #   ]
+    # }
+    #
+    # Only problem is, if AWS thinks the instance "already has" an extra IP, then 
+    # the command will fail, exit non-zero, and heartbeat interprets that as a problem.
+    # I'm trying to fix this later (see below) but it's not super reliable.  Bash has no try/catch.
+Instance_ID=`/usr/bin/curl --silent http://169.254.169.254/latest/meta-data/instance-id`
+ENI_ID=`/usr/bin/ec2-describe-instances $Instance_ID --region $REGION | grep eni -m 1 | awk '{print $2;}'`
+echo "Ok, I'm taking over $VIP..."
+
+    # With the || exit 0, we're assuming that the only "bad" thing that will ever happen is
+    # the "Client.PrivateIpAddressLimitExceeded" error, which is OK (for instance if the box 
+    # crashed and is coming back up).  If it's another error, this script will still exit 0, 
+    # which means heartbeat will think it succeeded.  
+/usr/bin/ec2-assign-private-ip-addresses -n $ENI_ID --secondary-private-ip-address $VIP --allow-reassignment --region $REGION || exit 0
