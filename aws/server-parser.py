@@ -36,7 +36,7 @@ class server:
         print self.CommonName + "," + self.InstanceId + "," + self.InstanceType + "," + self.Subnet + "," + self.IP + "," + self.AvailabilityZone + "," + self.VpcId + "," + self.Status
 
     def display(self):
-        print self.CommonName, "    ", self.InstanceId, "   ", self.InstanceType, " ", self.AvailabilityZone, " ", self.Status
+        print self.CommonName + "	" + self.InstanceId + "	" + self.InstanceType + "	" + self.Subnet + "	" + self.IP + "	" + self.AvailabilityZone + "	" + self.VpcId + "	" + self.Status
 
 servers = []
 for reservation in awsdata['Reservations']:
