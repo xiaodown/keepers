@@ -1,6 +1,0 @@
-*.json
-us-*
-rds-*
-acl-*
-elb-*
-*.pyc
