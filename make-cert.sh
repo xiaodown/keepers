@@ -10,8 +10,8 @@ fi
 username=$1
 homedir=$(whoami)
 region="${2}1"
-starname="star.${username}.dev-${region}.internal.pos-api.com"
-asteriskname="*.${username}.dev-${region}.internal.pos-api.com"
+starname="star.${username}.dev-${region}.internal.example.com"
+asteriskname="*.${username}.dev-${region}.internal.example.com"
 bits=2048
 dir="/home/$homedir/certs/dev/$username/"
 
@@ -39,15 +39,15 @@ cat << EOD > expect.cert.sh
     expect -exact "Locality Name (eg, city) \[\]:"
     send -- "San Francisco\r"
     expect -exact "Organization Name (eg, company) \[Internet Widgits Pty Ltd\]:"
-    send -- "Omnivore Technologies, Inc.\r"
+    send -- "Example Company, Inc.\r"
     expect -exact "Organizational Unit Name (eg, section) \[\]:"
     send -- "Department of SSL Tomfoolery\r"
     expect -exact "Common Name (e.g. server FQDN or YOUR name) \[\]:"
     send -- "$asteriskname"
-    expect ".internal.pos-api.com"
+    expect ".internal.example.com"
     send -- "\r"
     expect -exact "Email Address \[\]:"
-    send -- "corporate@omnivore.io\r"
+    send -- "ssl@example.com\r"
     expect -exact "A challenge password \[\]:"
     send -- "\r"
     expect -exact "An optional company name \[\]:"
