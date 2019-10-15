@@ -3,7 +3,6 @@
 #####################################
 # move an ip with AWS and Heartbeat #
 # Will Dunn			    #
-# Positronics Technologies          #
 #####################################
 
   # The region the instances are in (ie: us-east-1)
