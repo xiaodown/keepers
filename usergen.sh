@@ -76,7 +76,11 @@ tarball_keys() {
 
 teardown() {
 
-    echo "hi"
+    for i in $(grep testuser /etc/passwd | cut -d\: -f1) ;do
+        userdel -r $i
+        rm -rf /home/$i 2>/dev/null
+    done
+    groupdel testgroup
 
 }
 
