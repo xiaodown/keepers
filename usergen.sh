@@ -15,7 +15,7 @@ log_setup() {
 
 create_group() {
 
-    if [ ! getent group testgroup ] ;then
+    if [ "$(getent group testgroup)" = "" ] ;then
         groupadd -f testgroup
     fi
 
