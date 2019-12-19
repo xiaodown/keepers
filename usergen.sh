@@ -29,7 +29,7 @@ prep_work() {
     fi
 
     cd /root/
-    mkdir /root/usergen
+    mkdir /root/usergen 2>/dev/null
     mkdir /tmp/privatekeys
 
     log_setup
@@ -81,6 +81,7 @@ teardown() {
         rm -rf /home/$i 2>/dev/null
     done
     groupdel testgroup
+    rm -rf /tmp/privatekeys 2>/dev/null
 
 }
 
