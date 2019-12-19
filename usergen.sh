@@ -67,7 +67,7 @@ tarball_keys() {
 
     log "making tarball of private keys"
     cd /tmp/
-    tar -cvf privatekeys.tar ./privatekeys
+    tar -cf privatekeys.tar ./privatekeys
     gzip privatekeys.tar
     rm -rf /tmp/privatekeys
     mv privatekeys.tar.gz /root/usergen/privatekeys.$(date +%s).tar.gz
@@ -76,12 +76,17 @@ tarball_keys() {
 
 teardown() {
 
+    echo "Deleting users..."
     for i in $(grep testuser /etc/passwd | cut -d\: -f1) ;do
-        userdel -r $i
+        userdel -r $i 2>&1 | grep -v "mail spool"
         rm -rf /home/$i 2>/dev/null
+        echo -n "."
     done
+    echo
+    echo "Deleting testgroup..."
     groupdel testgroup
     rm -rf /tmp/privatekeys 2>/dev/null
+    echo "Done."
 
 }
 
