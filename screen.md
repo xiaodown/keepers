@@ -59,7 +59,7 @@ The scrolling up takes a bit of getting used to, but basically, `^a ESC`, then y
 Command | effect
 --- | ---
 `^a S` | split screen horizontally
-`^a |` | split screen vertically
+`^a \|` | split screen vertically
 `^a TAB` | jump to the next split region
 `^a X` | remove current region
 `^a Q` | remove all other regions except current
