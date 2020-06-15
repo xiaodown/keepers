@@ -19,7 +19,7 @@ If you are logged in on a different terminal, you can add the `-d` flag to the r
 
 ### Screenrc
 
-If you are using either [Mike Taczak's "dotfiles" repo](https://github.com/milagre/dotfiles) or a close derivative, there is a `.screenrc` in there that will set your screen up to be nice and pretty (in the same way a .vimrc does for vim).  I absolutely recommend the .screenrc in there.
+I recommend using [my `.screenrc`](https://github.com/xiaodown/dotfiles/blob/master/.screenrc) - it will make screen all nice and pretty.
 
 This screenrc will set up visible tabs along the bottom (like this: http://i.imgur.com/sahGhp0.png), as well as some unix-y stuff to manage the delete key, the terminal bell, etc.
 
