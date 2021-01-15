@@ -85,7 +85,7 @@ Command | effect
 `screen -ls` | see a list of screens (for the current user)
 `screen -r <name>` | reattach to the screen named `<name>`
 `screen -dr <name>` | detach other sessions and reattach to the screen named `<name>`
-`screen -ls xiaodown/` | get a list of `wdunn`'s screens
+`screen -ls xiaodown/` | get a list of `xiaodown`'s screens
 `screen -x xiaodown/foobar` | multiuser attach to the `foobar` screen that `xiaodown` is running
 
 
