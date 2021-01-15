@@ -69,7 +69,7 @@ Command | effect
 Useful for pair programming, you may want to share a screen with a co-worker.  
 To get a list of screens running under a different user, you can use `screen -ls xiaodown/`.  Note the trailing slash, and of course, replace `xiaodown` with the unix username of the user's screen that you are attempting to attach to.  To share a screen, first, the "host" of the session will also need to enable multiuser mode, covered below.  To attach to a screen, use `screen -x xiaodown/foobar` where `xiaodown` is the user and `foobar` is the name of the screen.  
 
-Command | effect
+Command (note colons) | effect
 ---|---
 `^a :multiuser on` | turn multi-user on
 `^a :acladd <username>` | allow `<username>` to join screen session
